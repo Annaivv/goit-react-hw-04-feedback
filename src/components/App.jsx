@@ -30,9 +30,6 @@ export const App = () => {
       default:
         return;
     }
-    console.log('good: ', good);
-    console.log('neutral: ', neutral);
-    console.log('bad: ', bad);
   };
 
   const countTotalFeedback = () => {

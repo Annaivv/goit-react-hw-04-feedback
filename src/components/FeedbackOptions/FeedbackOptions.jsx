@@ -1,45 +1,41 @@
-import React, { Component } from 'react';
+import { useState } from 'react';
+import PropTypes from 'prop-types';
 import './Feedback.css';
 
-export class FeedbackOptions extends Component {
-  state = {
-    activeOptionIdx: null,
-  };
+export function FeedbackOptions({ options, onLeaveFeedback }) {
+  const [activeOptionIdx, setActiveOptionIdx] = useState(null);
 
-  setActiveIdx = index => {
-    this.setState({ activeOptionIdx: index });
-  };
-
-  makeOptionClassName = index => {
+  const makeOptionClassName = index => {
     const optionClasses = ['button'];
 
-    if (index === this.state.activeOptionIdx) {
+    if (index === activeOptionIdx) {
       optionClasses.push('button--active');
     }
     return optionClasses.join(' ');
   };
 
-  render() {
-    const { options, onLeaveFeedback } = this.props;
-
-    return (
-      <div>
-        {options.map((option, index) => {
-          return (
-            <button
-              key={index}
-              name={option}
-              className={this.makeOptionClassName(index)}
-              onClick={evt => {
-                this.setActiveIdx(index);
-                onLeaveFeedback(evt);
-              }}
-            >
-              {option}
-            </button>
-          );
-        })}
-      </div>
-    );
-  }
+  return (
+    <div>
+      {options.map((option, index) => {
+        return (
+          <button
+            key={index}
+            name={option}
+            className={makeOptionClassName(index)}
+            onClick={evt => {
+              setActiveOptionIdx(index);
+              onLeaveFeedback(evt);
+            }}
+          >
+            {option}
+          </button>
+        );
+      })}
+    </div>
+  );
 }
+
+FeedbackOptions.propTypes = {
+  options: PropTypes.array.isRequired,
+  onLeaveFeedback: PropTypes.func.isRequired,
+};
